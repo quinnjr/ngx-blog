@@ -1,0 +1,274 @@
+.wysiwyg-editor-container {
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: white;
+  transition: border-color 0.2s;
+}
+
+.wysiwyg-editor-container:focus-within {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.editor {
+  background: white;
+}
+
+.editor.disabled {
+  background: #f9fafb;
+  cursor: not-allowed;
+}
+
+/* Quill toolbar customization */
+:host ::ng-deep .ql-toolbar {
+  background: #f9fafb;
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.75rem;
+}
+
+:host ::ng-deep .ql-container {
+  border: none;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+:host ::ng-deep .ql-editor {
+  padding: 1.5rem;
+  min-height: 300px;
+}
+
+:host ::ng-deep .ql-editor.ql-blank::before {
+  color: #9ca3af;
+  font-style: normal;
+}
+
+:host ::ng-deep .ql-editor:focus {
+  outline: none;
+}
+
+/* Toolbar buttons */
+:host ::ng-deep .ql-toolbar button {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
+}
+
+:host ::ng-deep .ql-toolbar button:hover {
+  background: #e5e7eb;
+}
+
+:host ::ng-deep .ql-toolbar button.ql-active {
+  background: #dbeafe;
+  color: #3b82f6;
+}
+
+:host ::ng-deep .ql-toolbar .ql-stroke {
+  stroke: #4b5563;
+}
+
+:host ::ng-deep .ql-toolbar .ql-fill {
+  fill: #4b5563;
+}
+
+:host ::ng-deep .ql-toolbar button:hover .ql-stroke,
+:host ::ng-deep .ql-toolbar button.ql-active .ql-stroke {
+  stroke: #3b82f6;
+}
+
+:host ::ng-deep .ql-toolbar button:hover .ql-fill,
+:host ::ng-deep .ql-toolbar button.ql-active .ql-fill {
+  fill: #3b82f6;
+}
+
+/* Toolbar dropdowns */
+:host ::ng-deep .ql-toolbar select {
+  border: 1px solid #d1d5db;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+:host ::ng-deep .ql-toolbar select:focus {
+  border-color: #3b82f6;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Content styling */
+:host ::ng-deep .ql-editor h1 {
+  font-size: 2em;
+  font-weight: 700;
+  margin: 1em 0 0.5em;
+}
+
+:host ::ng-deep .ql-editor h2 {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin: 1em 0 0.5em;
+}
+
+:host ::ng-deep .ql-editor h3 {
+  font-size: 1.25em;
+  font-weight: 600;
+  margin: 1em 0 0.5em;
+}
+
+:host ::ng-deep .ql-editor blockquote {
+  border-left: 4px solid #3b82f6;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: #4b5563;
+  font-style: italic;
+}
+
+:host ::ng-deep .ql-editor pre {
+  background: #1f2937;
+  color: #f9fafb;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+:host ::ng-deep .ql-editor code {
+  background: #f3f4f6;
+  color: #ef4444;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+}
+
+:host ::ng-deep .ql-editor a {
+  color: #3b82f6;
+  text-decoration: underline;
+}
+
+:host ::ng-deep .ql-editor img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.375rem;
+  margin: 1rem 0;
+}
+
+:host ::ng-deep .ql-editor ul,
+:host ::ng-deep .ql-editor ol {
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+:host ::ng-deep .ql-editor li {
+  margin: 0.5rem 0;
+}
+
+/* Editor footer */
+.editor-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.editor-stats {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.stat strong {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.disabled-badge {
+  padding: 0.25rem 0.75rem;
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .wysiwyg-editor-container {
+    border-color: #374151;
+    background: #1f2937;
+  }
+
+  .editor {
+    background: #1f2937;
+  }
+
+  .editor.disabled {
+    background: #111827;
+  }
+
+  :host ::ng-deep .ql-toolbar {
+    background: #111827;
+    border-bottom-color: #374151;
+  }
+
+  :host ::ng-deep .ql-container {
+    color: #f9fafb;
+  }
+
+  :host ::ng-deep .ql-editor {
+    color: #f9fafb;
+  }
+
+  :host ::ng-deep .ql-editor.ql-blank::before {
+    color: #6b7280;
+  }
+
+  :host ::ng-deep .ql-toolbar .ql-stroke {
+    stroke: #d1d5db;
+  }
+
+  :host ::ng-deep .ql-toolbar .ql-fill {
+    fill: #d1d5db;
+  }
+
+  .editor-footer {
+    background: #111827;
+    border-top-color: #374151;
+    color: #9ca3af;
+  }
+
+  .stat strong {
+    color: #f9fafb;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  :host ::ng-deep .ql-toolbar {
+    padding: 0.5rem;
+  }
+
+  :host ::ng-deep .ql-toolbar button {
+    width: 28px;
+    height: 28px;
+  }
+
+  :host ::ng-deep .ql-editor {
+    padding: 1rem;
+  }
+
+  .editor-stats {
+    gap: 1rem;
+    font-size: 0.75rem;
+  }
+}

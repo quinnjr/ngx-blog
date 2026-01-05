@@ -1,0 +1,138 @@
+{
+  "name": "@pegasusheavy/ngx-blog-cms",
+  "version": "1.0.0",
+  "private": false,
+  "schematics": "./schematics/collection.json",
+  "description": "A modern Angular-based blogging CMS with theme support and SEO optimization",
+  "author": {
+    "name": "Pegasus Heavy Industries",
+    "email": "contact@pegasusheavy.com",
+    "url": "https://github.com/PegasusHeavyIndustries"
+  },
+  "license": "MIT",
+  "keywords": [
+    "angular",
+    "blog",
+    "cms",
+    "tailwindcss",
+    "seo",
+    "ssr",
+    "typescript",
+    "blogging-platform"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PegasusHeavyIndustries/ngx-blog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PegasusHeavyIndustries/ngx-blog/issues"
+  },
+  "homepage": "https://github.com/PegasusHeavyIndustries/ngx-blog#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "dev": "ng serve",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
+    "format": "prettier --write \"src/**/*.{ts,html,css,scss,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,html,css,scss,json}\"",
+    "migrate:import": "tsx scripts/wordpress-import.ts",
+    "prepare": "husky",
+    "prepublishOnly": "pnpm build && pnpm package:schematics",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "serve:ssr:ngx-blog-cms": "node dist/ngx-blog-cms/server/server.mjs",
+    "setup": "node scripts/setup.js",
+    "postinstall": "echo '✅ Dependencies installed! Run \"pnpm start\" to begin.'",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "tsx prisma/seed.ts",
+    "prisma:studio": "prisma studio",
+    "db:setup": "prisma migrate dev && prisma db seed",
+    "build:schematics": "cd schematics && tsc -p tsconfig.json",
+    "copy:schematics": "cp -r schematics/ng-add/files dist/schematics/ng-add/ && cp schematics/collection.json dist/schematics/",
+    "package:schematics": "pnpm build:schematics && pnpm copy:schematics"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": "*.html",
+        "options": {
+          "parser": "angular"
+        }
+      }
+    ]
+  },
+  "packageManager": "pnpm@10.26.2",
+  "dependencies": {
+    "@angular/cdk": "^21.0.5",
+    "@angular/common": "^21.0.0",
+    "@angular/compiler": "^21.0.0",
+    "@angular/core": "^21.0.0",
+    "@angular/forms": "^21.0.0",
+    "@angular/platform-browser": "^21.0.0",
+    "@angular/platform-server": "^21.0.0",
+    "@angular/router": "^21.0.0",
+    "@angular/ssr": "^21.0.4",
+    "@fortawesome/angular-fontawesome": "^4.0.0",
+    "@fortawesome/fontawesome-svg-core": "^7.1.0",
+    "@fortawesome/free-brands-svg-icons": "^7.1.0",
+    "@fortawesome/free-regular-svg-icons": "^7.1.0",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@prisma/client": "^7.2.0",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.2.1",
+    "express-validator": "^7.3.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.16.3",
+    "quill": "^2.0.3",
+    "quill-image-resize-module": "^3.0.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/core": "^21.0.4",
+    "@angular-devkit/schematics": "^21.0.4",
+    "@angular/build": "^21.0.4",
+    "@angular/cli": "^21.0.4",
+    "@angular/compiler-cli": "^21.0.0",
+    "@commitlint/cli": "^20.3.0",
+    "@commitlint/config-conventional": "^20.3.0",
+    "@eslint/js": "^9.39.2",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/bcryptjs": "^3.0.0",
+    "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^20.17.19",
+    "@types/pg": "^8.16.0",
+    "@typescript-eslint/eslint-plugin": "^8.52.0",
+    "@typescript-eslint/parser": "^8.52.0",
+    "autoprefixer": "^10.4.23",
+    "eslint": "^9.39.2",
+    "eslint-plugin-angular": "^5.0.0",
+    "husky": "^9.1.7",
+    "jsdom": "^27.1.0",
+    "lint-staged": "^16.2.7",
+    "postcss": "^8.5.6",
+    "prettier": "^3.7.4",
+    "prisma": "^7.2.0",
+    "tailwindcss": "^4.1.18",
+    "tsx": "^4.21.0",
+    "typescript": "~5.9.2",
+    "vitest": "^4.0.8"
+  }
+}

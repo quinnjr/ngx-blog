@@ -1,0 +1,63 @@
+/* Tailwind CSS 4+ imports */
+@import 'tailwindcss';
+
+/* Custom global styles */
+:root {
+  --color-primary: #3b82f6;
+  --color-secondary: #8b5cf6;
+  --color-accent: #f59e0b;
+}
+
+body {
+  @apply antialiased;
+}
+
+/* Rich text editor content styles */
+.prose {
+  @apply max-w-none;
+}
+
+.prose h1 {
+  @apply text-4xl font-bold mt-8 mb-4;
+}
+
+.prose h2 {
+  @apply text-3xl font-bold mt-6 mb-3;
+}
+
+.prose h3 {
+  @apply text-2xl font-bold mt-4 mb-2;
+}
+
+.prose p {
+  @apply mb-4 leading-relaxed;
+}
+
+.prose a {
+  @apply text-blue-600 hover:text-blue-800 underline;
+}
+
+.prose ul,
+.prose ol {
+  @apply mb-4 ml-6;
+}
+
+.prose li {
+  @apply mb-2;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-gray-300 pl-4 italic my-4;
+}
+
+.prose code {
+  @apply bg-gray-100 px-2 py-1 rounded text-sm;
+}
+
+.prose pre {
+  @apply bg-gray-900 text-white p-4 rounded-lg overflow-x-auto my-4;
+}
+
+.prose img {
+  @apply rounded-lg shadow-lg my-4;
+}

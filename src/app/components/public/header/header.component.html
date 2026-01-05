@@ -1,0 +1,98 @@
+<header class="bg-white shadow-sm sticky top-0 z-50">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <div class="flex-shrink-0">
+        <a routerLink="/" class="text-2xl font-bold text-gray-900"> NGX Blog </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex md:items-center md:space-x-8">
+        <a
+          routerLink="/"
+          routerLinkActive="text-blue-600"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="text-gray-700 hover:text-blue-600 font-medium transition-colors"
+        >
+          Home
+        </a>
+
+        @for (category of categories().slice(0, 4); track category.id) {
+          <a
+            [routerLink]="['/category', category.slug]"
+            routerLinkActive="text-blue-600"
+            class="text-gray-700 hover:text-blue-600 font-medium transition-colors"
+          >
+            {{ category.name }}
+          </a>
+        }
+
+        @for (page of pages().slice(0, 2); track page.id) {
+          <a
+            [routerLink]="['/', page.slug]"
+            routerLinkActive="text-blue-600"
+            class="text-gray-700 hover:text-blue-600 font-medium transition-colors"
+          >
+            {{ page.title }}
+          </a>
+        }
+
+        <!-- Search Icon -->
+        <button class="text-gray-700 hover:text-blue-600">
+          <fa-icon [icon]="['fas', 'search']"></fa-icon>
+        </button>
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden">
+        <button
+          (click)="toggleMobileMenu()"
+          class="text-gray-700 hover:text-gray-900 focus:outline-none"
+        >
+          @if (!mobileMenuOpen()) {
+            <fa-icon [icon]="['fas', 'bars']" class="text-xl"></fa-icon>
+          } @else {
+            <fa-icon [icon]="['fas', 'times']" class="text-xl"></fa-icon>
+          }
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    @if (mobileMenuOpen()) {
+      <div class="md:hidden py-4 space-y-2">
+        <a
+          routerLink="/"
+          (click)="toggleMobileMenu()"
+          routerLinkActive="text-blue-600 bg-blue-50"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="block px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md"
+        >
+          Home
+        </a>
+
+        @for (category of categories().slice(0, 4); track category.id) {
+          <a
+            [routerLink]="['/category', category.slug]"
+            (click)="toggleMobileMenu()"
+            routerLinkActive="text-blue-600 bg-blue-50"
+            class="block px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md"
+          >
+            {{ category.name }}
+          </a>
+        }
+
+        @for (page of pages(); track page.id) {
+          <a
+            [routerLink]="['/', page.slug]"
+            (click)="toggleMobileMenu()"
+            routerLinkActive="text-blue-600 bg-blue-50"
+            class="block px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md"
+          >
+            {{ page.title }}
+          </a>
+        }
+      </div>
+    }
+  </nav>
+</header>

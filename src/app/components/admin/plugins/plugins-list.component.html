@@ -1,0 +1,178 @@
+<div class="plugins-container">
+  <div class="plugins-header">
+    <h1>Plugins</h1>
+    <p class="subtitle">Extend your blog's functionality with plugins</p>
+  </div>
+
+  <div class="plugins-grid">
+    @for (plugin of plugins(); track plugin.id) {
+      <div class="plugin-card" [class.enabled]="plugin.enabled">
+        <div class="plugin-header">
+          <div class="plugin-icon">
+            <fa-icon
+              [icon]="['fas', plugin.icon || getCategoryIcon(plugin.category || 'other')]"
+            ></fa-icon>
+          </div>
+          <div class="plugin-info">
+            <h3>{{ plugin.name }}</h3>
+            <span class="plugin-category">{{ plugin.category || 'other' }}</span>
+          </div>
+          <div class="plugin-toggle">
+            <label class="switch">
+              <input
+                type="checkbox"
+                [checked]="plugin.enabled"
+                (change)="togglePlugin(plugin.id, $any($event.target).checked)"
+              />
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <p class="plugin-description">{{ plugin.description }}</p>
+
+        <div class="plugin-meta">
+          <span class="plugin-author">
+            <fa-icon [icon]="['fas', 'user']"></fa-icon>
+            {{ plugin.author }}
+          </span>
+          <span class="plugin-version">v{{ plugin.version }}</span>
+        </div>
+
+        <div class="plugin-actions">
+          <button
+            class="btn btn-secondary"
+            (click)="openSettings(plugin)"
+            [disabled]="!plugin.enabled"
+          >
+            <fa-icon [icon]="['fas', 'cog']"></fa-icon>
+            Settings
+          </button>
+          @if (plugin.homepage) {
+            <a [href]="plugin.homepage" target="_blank" class="btn btn-link">
+              <fa-icon [icon]="['fas', 'external-link-alt']"></fa-icon>
+              Learn More
+            </a>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (plugins().length === 0) {
+    <div class="empty-state">
+      <fa-icon [icon]="['fas', 'puzzle-piece']" size="3x"></fa-icon>
+      <h2>No Plugins Installed</h2>
+      <p>Add plugins to extend your blog's functionality</p>
+    </div>
+  }
+</div>
+
+<!-- Settings Modal -->
+@if (showSettings()) {
+  <div class="modal-overlay" (click)="closeSettings()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ selectedPlugin()?.name }} Settings</h2>
+        <button class="close-btn" (click)="closeSettings()">
+          <fa-icon [icon]="['fas', 'times']"></fa-icon>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        @if (selectedPlugin(); as plugin) {
+          @if (getPluginConfig(plugin.id)?.settings; as settings) {
+            <div class="settings-form">
+              @for (setting of settings; track setting.key) {
+                <div class="form-group">
+                  <label [for]="setting.key">
+                    {{ setting.label }}
+                    @if (setting.required) {
+                      <span class="required">*</span>
+                    }
+                  </label>
+
+                  @if (setting.type === 'text') {
+                    <input
+                      type="text"
+                      [id]="setting.key"
+                      [value]="pluginSettings()[setting.key]"
+                      (input)="updateSetting(setting.key, $any($event.target).value)"
+                      [required]="setting.required"
+                    />
+                  }
+
+                  @if (setting.type === 'textarea') {
+                    <textarea
+                      [id]="setting.key"
+                      [value]="pluginSettings()[setting.key]"
+                      (input)="updateSetting(setting.key, $any($event.target).value)"
+                      [required]="setting.required"
+                      rows="4"
+                    ></textarea>
+                  }
+
+                  @if (setting.type === 'number') {
+                    <input
+                      type="number"
+                      [id]="setting.key"
+                      [value]="pluginSettings()[setting.key]"
+                      (input)="updateSetting(setting.key, +$any($event.target).value)"
+                      [required]="setting.required"
+                    />
+                  }
+
+                  @if (setting.type === 'boolean') {
+                    <label class="checkbox-label">
+                      <input
+                        type="checkbox"
+                        [id]="setting.key"
+                        [checked]="pluginSettings()[setting.key]"
+                        (change)="updateSetting(setting.key, $any($event.target).checked)"
+                      />
+                      <span>{{ setting.helpText || 'Enable this option' }}</span>
+                    </label>
+                  }
+
+                  @if (setting.type === 'select') {
+                    <select
+                      [id]="setting.key"
+                      [value]="pluginSettings()[setting.key]"
+                      (change)="updateSetting(setting.key, $any($event.target).value)"
+                      [required]="setting.required"
+                    >
+                      @for (option of setting.options; track option.value) {
+                        <option [value]="option.value">{{ option.label }}</option>
+                      }
+                    </select>
+                  }
+
+                  @if (setting.type === 'color') {
+                    <input
+                      type="color"
+                      [id]="setting.key"
+                      [value]="pluginSettings()[setting.key]"
+                      (input)="updateSetting(setting.key, $any($event.target).value)"
+                      [required]="setting.required"
+                    />
+                  }
+
+                  @if (setting.helpText && setting.type !== 'boolean') {
+                    <small class="help-text">{{ setting.helpText }}</small>
+                  }
+                </div>
+              }
+            </div>
+          } @else {
+            <p>This plugin has no configurable settings.</p>
+          }
+        }
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="closeSettings()">Cancel</button>
+        <button class="btn btn-primary" (click)="saveSettings()">Save Settings</button>
+      </div>
+    </div>
+  </div>
+}

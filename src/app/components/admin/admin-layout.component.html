@@ -1,0 +1,98 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- Admin Header -->
+  <header class="bg-white shadow-sm border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <button
+            (click)="toggleSidebar()"
+            class="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100"
+          >
+            <fa-icon [icon]="['fas', 'bars']" class="text-xl"></fa-icon>
+          </button>
+          <h1 class="ml-4 text-xl font-bold text-gray-900">NGX Blog CMS</h1>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="/" target="_blank" class="text-sm text-gray-600 hover:text-gray-900">
+            View Site
+          </a>
+          <div
+            class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-medium"
+          >
+            A
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex">
+    <!-- Sidebar -->
+    <aside
+      [class.hidden]="!sidebarOpen()"
+      class="lg:block w-64 bg-white border-r min-h-[calc(100vh-64px)]"
+    >
+      <nav class="p-4 space-y-1">
+        <a
+          routerLink="/admin"
+          routerLinkActive="bg-blue-50 text-blue-700"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100"
+        >
+          <fa-icon [icon]="['fas', 'home']" class="mr-3"></fa-icon>
+          Dashboard
+        </a>
+
+        <a
+          routerLink="/admin/posts"
+          routerLinkActive="bg-blue-50 text-blue-700"
+          class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100"
+        >
+          <fa-icon [icon]="['fas', 'newspaper']" class="mr-3"></fa-icon>
+          Posts
+        </a>
+
+        <a
+          routerLink="/admin/pages"
+          routerLinkActive="bg-blue-50 text-blue-700"
+          class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100"
+        >
+          <fa-icon [icon]="['fas', 'file-alt']" class="mr-3"></fa-icon>
+          Pages
+        </a>
+
+        <a
+          routerLink="/admin/categories"
+          routerLinkActive="bg-blue-50 text-blue-700"
+          class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100"
+        >
+          <fa-icon [icon]="['fas', 'tags']" class="mr-3"></fa-icon>
+          Categories
+        </a>
+
+        <a
+          routerLink="/admin/themes"
+          routerLinkActive="bg-blue-50 text-blue-700"
+          class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100"
+        >
+          <fa-icon [icon]="['fas', 'palette']" class="mr-3"></fa-icon>
+          Themes
+        </a>
+
+        <a
+          routerLink="/admin/settings"
+          routerLinkActive="bg-blue-50 text-blue-700"
+          class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100"
+        >
+          <fa-icon [icon]="['fas', 'cog']" class="mr-3"></fa-icon>
+          Settings
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6 lg:p-8">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

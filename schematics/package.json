@@ -1,0 +1,21 @@
+{
+  "name": "ngx-blog-cms-schematics",
+  "version": "1.0.0",
+  "description": "Schematics for NGX Blog CMS",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "keywords": [
+    "schematics",
+    "angular",
+    "blog",
+    "cms"
+  ],
+  "dependencies": {
+    "@angular-devkit/core": "^19.1.0",
+    "@angular-devkit/schematics": "^19.1.0",
+    "@types/node": "^22.10.5",
+    "typescript": "~5.7.2"
+  }
+}

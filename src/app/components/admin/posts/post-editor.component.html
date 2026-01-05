@@ -1,0 +1,236 @@
+<div class="post-editor-container">
+  <div class="editor-header">
+    <h1>{{ isEditMode() ? 'Edit Post' : 'Create New Post' }}</h1>
+    <div class="header-actions">
+      <button type="button" class="btn btn-secondary" (click)="togglePreview()">
+        <fa-icon [icon]="['fas', showPreview() ? 'edit' : 'eye']"></fa-icon>
+        {{ showPreview() ? 'Edit' : 'Preview' }}
+      </button>
+    </div>
+  </div>
+
+  <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="editor-form">
+    @if (!showPreview()) {
+      <!-- Edit Mode -->
+      <div class="form-section">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="title">Title <span class="required">*</span></label>
+            <input
+              type="text"
+              id="title"
+              formControlName="title"
+              placeholder="Enter post title"
+              class="form-control"
+            />
+            @if (postForm.get('title')?.invalid && postForm.get('title')?.touched) {
+              <span class="error">Title is required (min 3 characters)</span>
+            }
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="slug">Slug <span class="required">*</span></label>
+            <input
+              type="text"
+              id="slug"
+              formControlName="slug"
+              placeholder="post-url-slug"
+              class="form-control"
+            />
+            @if (postForm.get('slug')?.invalid && postForm.get('slug')?.touched) {
+              <span class="error">Slug is required</span>
+            }
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group full-width">
+            <label for="content">Content <span class="required">*</span></label>
+            <app-wysiwyg-editor
+              formControlName="content"
+              placeholder="Write your post content here..."
+              [height]="'500px'"
+            ></app-wysiwyg-editor>
+            @if (postForm.get('content')?.invalid && postForm.get('content')?.touched) {
+              <span class="error">Content is required</span>
+            }
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="excerpt">Excerpt</label>
+            <textarea
+              id="excerpt"
+              formControlName="excerpt"
+              rows="3"
+              placeholder="Brief summary (auto-generated if empty)"
+              class="form-control"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="featuredImage">Featured Image URL</label>
+            <input
+              type="text"
+              id="featuredImage"
+              formControlName="featuredImage"
+              placeholder="https://example.com/image.jpg"
+              class="form-control"
+            />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="categoryIds">Categories</label>
+            <select id="categoryIds" formControlName="categoryIds" multiple class="form-control">
+              @for (category of categories(); track category.id) {
+                <option [value]="category.id">{{ category.name }}</option>
+              }
+            </select>
+            <small class="help-text">Hold Ctrl/Cmd to select multiple</small>
+          </div>
+
+          <div class="form-group">
+            <label for="tags">Tags</label>
+            <input
+              type="text"
+              id="tags"
+              formControlName="tags"
+              placeholder="tag1, tag2, tag3"
+              class="form-control"
+            />
+            <small class="help-text">Comma-separated tags</small>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status" formControlName="status" class="form-control">
+              <option value="draft">Draft</option>
+              <option value="published">Published</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- SEO Section -->
+        <div class="form-section">
+          <h2 class="section-title">
+            <fa-icon [icon]="['fas', 'search']"></fa-icon>
+            SEO Settings
+          </h2>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="seoTitle">SEO Title</label>
+              <input
+                type="text"
+                id="seoTitle"
+                formControlName="seoTitle"
+                placeholder="Optimized title for search engines"
+                class="form-control"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="seoDescription">SEO Description</label>
+              <textarea
+                id="seoDescription"
+                formControlName="seoDescription"
+                rows="2"
+                placeholder="Meta description for search results"
+                class="form-control"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="seoKeywords">SEO Keywords</label>
+              <input
+                type="text"
+                id="seoKeywords"
+                formControlName="seoKeywords"
+                placeholder="keyword1, keyword2, keyword3"
+                class="form-control"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <!-- Preview Mode -->
+      <div class="preview-container">
+        <article class="preview-content">
+          <h1 class="preview-title">{{ postForm.get('title')?.value || 'Untitled' }}</h1>
+
+          @if (postForm.get('featuredImage')?.value) {
+            <img
+              [src]="postForm.get('featuredImage')?.value"
+              [alt]="postForm.get('title')?.value"
+              class="preview-image"
+            />
+          }
+
+          <div class="preview-meta">
+            <span>
+              <fa-icon [icon]="['fas', 'calendar']"></fa-icon>
+              {{ currentDate.toLocaleDateString() }}
+            </span>
+            @if (postForm.get('categoryIds')?.value?.length > 0) {
+              <span>
+                <fa-icon [icon]="['fas', 'folder']"></fa-icon>
+                {{ postForm.get('categoryIds')?.value.length }} categories
+              </span>
+            }
+          </div>
+
+          <div class="preview-body" [innerHTML]="postForm.get('content')?.value"></div>
+        </article>
+      </div>
+    }
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary" (click)="onCancel()" [disabled]="isSaving()">
+        <fa-icon [icon]="['fas', 'times']"></fa-icon>
+        Cancel
+      </button>
+
+      <div class="actions-right">
+        <button
+          type="button"
+          class="btn btn-outline"
+          (click)="saveDraft()"
+          [disabled]="isSaving() || postForm.invalid"
+        >
+          <fa-icon [icon]="['fas', 'save']"></fa-icon>
+          Save Draft
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="publish()"
+          [disabled]="isSaving() || postForm.invalid"
+        >
+          @if (isSaving()) {
+            <fa-icon [icon]="['fas', 'spinner']"></fa-icon>
+            Saving...
+          } @else {
+            <fa-icon [icon]="['fas', 'check']"></fa-icon>
+            Publish
+          }
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

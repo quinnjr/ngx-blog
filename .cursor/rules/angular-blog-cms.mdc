@@ -1,0 +1,41 @@
+# Angular Blog CMS Rules
+
+## Component Structure
+- Always separate HTML, CSS, and TypeScript files
+- Use standalone components with explicit imports
+- Follow the naming convention: `component-name.component.ts/html/css`
+
+## State Management
+- Use Angular Signals for reactive state
+- Services should use `providedIn: 'root'` for singleton instances
+- Computed values should use `computed()` for derived state
+
+## Styling
+- Use Tailwind CSS utility classes
+- Keep component-specific styles in separate `.css` files
+- Use CSS custom properties for theme-able values
+
+## SEO Optimization
+- Always set meta tags using SEOService
+- Include structured data for blog posts
+- Use semantic HTML elements
+- Ensure proper heading hierarchy (h1, h2, h3, etc.)
+
+## Code Organization
+- Models in `src/app/models/`
+- Services in `src/app/services/`
+- Components in `src/app/components/`
+- Lazy load routes for better performance
+
+## TypeScript
+- Use strict mode
+- Define proper interfaces for all data structures
+- Avoid `any` type - use proper types or `unknown`
+- Use enums for fixed sets of values
+
+## Best Practices
+- Keep components focused and single-purpose
+- Use dependency injection for services
+- Implement proper error handling
+- Use async/await for asynchronous operations
+- Follow Angular style guide conventions

@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ngx-blog-app
+  namespace: ngx-blog
+  labels:
+    app: ngx-blog-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ngx-blog-app
+  template:
+    metadata:
+      labels:
+        app: ngx-blog-app
+    spec:
+      initContainers:
+        - name: migrate
+          image: your-registry/ngx-blog:latest
+          command:
+            - sh
+            - -c
+            - pnpm prisma migrate deploy && pnpm prisma db seed
+          envFrom:
+            - configMapRef:
+                name: ngx-blog-config
+            - secretRef:
+                name: ngx-blog-secret
+      containers:
+        - name: app
+          image: your-registry/ngx-blog:latest
+          ports:
+            - containerPort: 4000
+              name: http
+          envFrom:
+            - configMapRef:
+                name: ngx-blog-config
+            - secretRef:
+                name: ngx-blog-secret
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 4000
+            initialDelaySeconds: 40
+            periodSeconds: 30
+            timeoutSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 4000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ngx-blog-service
+  namespace: ngx-blog
+spec:
+  selector:
+    app: ngx-blog-app
+  ports:
+    - port: 80
+      targetPort: 4000
+      protocol: TCP
+  type: ClusterIP

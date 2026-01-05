@@ -1,0 +1,141 @@
+<div>
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-900 mb-2">Themes</h1>
+    <p class="text-gray-600">Customize your blog's appearance with themes</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    @for (theme of themes; track theme.id) {
+      <div
+        class="bg-white rounded-lg shadow overflow-hidden"
+        [class.ring-2]="activeTheme()?.id === theme.id"
+        [class.ring-blue-600]="activeTheme()?.id === theme.id"
+      >
+        <div
+          class="h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center"
+        >
+          <span class="text-white text-4xl font-bold">{{ theme.name.charAt(0) }}</span>
+        </div>
+        <div class="p-6">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900">{{ theme.name }}</h3>
+              <p class="text-sm text-gray-500">v{{ theme.version }}</p>
+            </div>
+            @if (activeTheme()?.id === theme.id) {
+              <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded">
+                Active
+              </span>
+            }
+          </div>
+          <p class="text-sm text-gray-600 mb-4">{{ theme.description }}</p>
+          <p class="text-xs text-gray-500 mb-4">By {{ theme.author }}</p>
+
+          @if (activeTheme()?.id !== theme.id) {
+            <button
+              (click)="activateTheme(theme.id)"
+              class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Activate Theme
+            </button>
+          } @else {
+            <button class="w-full bg-gray-100 text-gray-600 px-4 py-2 rounded-lg">Customize</button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Theme Configuration -->
+  @if (activeTheme(); as theme) {
+    <div class="mt-8 bg-white rounded-lg shadow p-6">
+      <h2 class="text-xl font-bold text-gray-900 mb-6">Theme Configuration</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Colors -->
+        <div>
+          <h3 class="font-semibold text-gray-900 mb-3">Colors</h3>
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-gray-600">Primary</span>
+              <div class="flex items-center gap-2">
+                <div
+                  class="w-8 h-8 rounded border"
+                  [style.background-color]="theme.config.colors.primary"
+                ></div>
+                <span class="text-xs text-gray-500">{{ theme.config.colors.primary }}</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-gray-600">Secondary</span>
+              <div class="flex items-center gap-2">
+                <div
+                  class="w-8 h-8 rounded border"
+                  [style.background-color]="theme.config.colors.secondary"
+                ></div>
+                <span class="text-xs text-gray-500">{{ theme.config.colors.secondary }}</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-gray-600">Accent</span>
+              <div class="flex items-center gap-2">
+                <div
+                  class="w-8 h-8 rounded border"
+                  [style.background-color]="theme.config.colors.accent"
+                ></div>
+                <span class="text-xs text-gray-500">{{ theme.config.colors.accent }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Features -->
+        <div>
+          <h3 class="font-semibold text-gray-900 mb-3">Features</h3>
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-gray-600">Dark Mode</span>
+              <span
+                class="text-sm"
+                [class.text-green-600]="theme.config.features.darkMode"
+                [class.text-gray-400]="!theme.config.features.darkMode"
+              >
+                {{ theme.config.features.darkMode ? 'Enabled' : 'Disabled' }}
+              </span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-gray-600">Comments</span>
+              <span
+                class="text-sm"
+                [class.text-green-600]="theme.config.features.comments"
+                [class.text-gray-400]="!theme.config.features.comments"
+              >
+                {{ theme.config.features.comments ? 'Enabled' : 'Disabled' }}
+              </span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-gray-600">Social Sharing</span>
+              <span
+                class="text-sm"
+                [class.text-green-600]="theme.config.features.socialSharing"
+                [class.text-gray-400]="!theme.config.features.socialSharing"
+              >
+                {{ theme.config.features.socialSharing ? 'Enabled' : 'Disabled' }}
+              </span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-gray-600">Search</span>
+              <span
+                class="text-sm"
+                [class.text-green-600]="theme.config.features.search"
+                [class.text-gray-400]="!theme.config.features.search"
+              >
+                {{ theme.config.features.search ? 'Enabled' : 'Disabled' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

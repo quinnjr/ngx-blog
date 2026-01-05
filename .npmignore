@@ -1,0 +1,62 @@
+# Development files
+node_modules/
+src/
+scripts/wordpress-export.php
+scripts/wordpress-import.ts
+.angular/
+.vscode/
+.idea/
+.husky/
+
+# Documentation (keep only essential)
+*.test.ts
+*.spec.ts
+coverage/
+.nyc_output/
+
+# Build artifacts
+dist/server/
+dist/browser/.angular/
+
+# Environment
+.env
+.env.*
+!.env.example
+env.example
+env.docker
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# Docker/K8s
+Dockerfile
+docker-compose.yml
+.dockerignore
+k8s/
+helm/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+*.swp
+*.swo
+*~
+
+# Temporary
+tmp/
+temp/

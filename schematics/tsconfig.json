@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": ["ES2022", "DOM"],
+    "module": "commonjs",
+    "target": "ES2022",
+    "types": ["node"],
+    "moduleResolution": "node",
+    "declaration": true,
+    "outDir": "../dist/schematics",
+    "rootDir": ".",
+    "skipLibCheck": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["**/*.spec.ts", "**/files/**/*"]
+}

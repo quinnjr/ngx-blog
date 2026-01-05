@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "NgxBlogCmsSchematic",
+  "title": "NGX Blog CMS Options Schema",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "The name of the project to add NGX Blog CMS to.",
+      "$default": {
+        "$source": "projectName"
+      }
+    },
+    "blogName": {
+      "type": "string",
+      "description": "The name of your blog",
+      "default": "My Blog",
+      "x-prompt": "What is the name of your blog?"
+    },
+    "blogDescription": {
+      "type": "string",
+      "description": "A short description of your blog",
+      "default": "A blog powered by NGX Blog CMS",
+      "x-prompt": "Enter a short description for your blog:"
+    },
+    "authorName": {
+      "type": "string",
+      "description": "Default author name",
+      "default": "Blog Admin",
+      "x-prompt": "What is the default author name?"
+    },
+    "authorEmail": {
+      "type": "string",
+      "description": "Default author email",
+      "default": "admin@example.com",
+      "x-prompt": "What is the default author email?"
+    },
+    "databaseUrl": {
+      "type": "string",
+      "description": "PostgreSQL database URL",
+      "default": "postgresql://user:password@localhost:5432/blog",
+      "x-prompt": "Enter your PostgreSQL database URL:"
+    },
+    "port": {
+      "type": "number",
+      "description": "Server port",
+      "default": 4000,
+      "x-prompt": "What port should the server run on?"
+    },
+    "setupDatabase": {
+      "type": "boolean",
+      "description": "Run database setup after installation",
+      "default": true,
+      "x-prompt": "Do you want to set up the database now?"
+    },
+    "installDependencies": {
+      "type": "boolean",
+      "description": "Install dependencies after setup",
+      "default": true
+    }
+  },
+  "required": []
+}

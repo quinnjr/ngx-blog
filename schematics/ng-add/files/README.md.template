@@ -1,0 +1,77 @@
+# <%= blogName %>
+
+<%= blogDescription %>
+
+Built with [NGX Blog CMS](https://github.com/PegasusHeavyIndustries/ngx-blog) - A powerful, customizable blogging system for Angular.
+
+## Features
+
+✨ **Modern Stack**: Angular 21+ with SSR, Tailwind CSS 4+
+🎨 **Themes**: Easy-to-customize theme system
+🔌 **Plugins**: Extensible plugin architecture
+📊 **SEO/AEO**: Built-in SEO optimization
+🗄️ **Database**: PostgreSQL with Prisma ORM
+⚡ **Fast**: Server-side rendering for optimal performance
+
+## Quick Start
+
+```bash
+# Install dependencies
+pnpm install
+
+# Set up database
+pnpm db:setup
+
+# Start development server
+pnpm dev:ssr
+
+# Open browser
+open http://localhost:<%= port %>
+```
+
+## Admin Panel
+
+Access the admin panel at: `http://localhost:<%= port %>/admin`
+
+## Documentation
+
+- [Installation Guide](INSTALL.md)
+- [Quick Start](QUICKSTART.md)
+- [Plugin Development](PLUGIN-QUICKSTART.md)
+
+## Customization
+
+### Themes
+Create custom themes in `src/themes/` - see existing themes for examples.
+
+### Plugins
+Build plugins in `src/plugins/` - check out the template and examples.
+
+## Scripts
+
+```bash
+pnpm dev              # Development server (client-side)
+pnpm dev:ssr          # Development server (SSR)
+pnpm build            # Production build
+pnpm build:ssr        # Production build with SSR
+pnpm serve:ssr        # Serve production build
+
+pnpm prisma:generate  # Generate Prisma client
+pnpm prisma:migrate   # Run database migrations
+pnpm prisma:seed      # Seed database
+pnpm prisma:studio    # Open Prisma Studio
+pnpm db:setup         # Complete database setup
+```
+
+## Author
+
+**<%= authorName %>**
+Email: <%= authorEmail %>
+
+## License
+
+MIT
+
+---
+
+Powered by [NGX Blog CMS](https://github.com/PegasusHeavyIndustries/ngx-blog)

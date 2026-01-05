@@ -1,0 +1,18 @@
+<div class="wysiwyg-editor-container">
+  <div #editor class="editor" [style.height]="height" [class.disabled]="isDisabled()"></div>
+
+  <div class="editor-footer">
+    <div class="editor-stats">
+      <span class="stat">
+        <strong>{{ characterCount() }}</strong> characters
+      </span>
+      <span class="stat">
+        <strong>{{ wordCount() }}</strong> words
+      </span>
+    </div>
+
+    @if (isDisabled()) {
+      <div class="disabled-badge">Read Only</div>
+    }
+  </div>
+</div>

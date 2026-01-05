@@ -1,0 +1,212 @@
+// This is your Prisma schema file
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Author/User model
+model Author {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  avatar    String?
+  bio       String?
+  twitter   String?
+  linkedin  String?
+  github    String?
+  website   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     Post[]
+
+  @@map("authors")
+}
+
+// Category model
+model Category {
+  id          String     @id @default(cuid())
+  name        String
+  slug        String     @unique
+  description String?
+  color       String?
+  icon        String?
+  order       Int        @default(0)
+  parentId    String?
+  parent      Category?  @relation("CategoryToCategory", fields: [parentId], references: [id], onDelete: SetNull)
+  children    Category[] @relation("CategoryToCategory")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  posts       Post[]
+
+  @@map("categories")
+}
+
+// Tag model
+model Tag {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  color     String?
+  createdAt DateTime @default(now())
+  posts     Post[]
+
+  @@map("tags")
+}
+
+// Post status enum
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  SCHEDULED
+  ARCHIVED
+}
+
+// Post model
+model Post {
+  id             String     @id @default(cuid())
+  title          String
+  slug           String     @unique
+  content        String     @db.Text
+  excerpt        String
+  featuredImage  String?
+  status         PostStatus @default(DRAFT)
+  publishedAt    DateTime?
+  views          Int        @default(0)
+  likes          Int        @default(0)
+  authorId       String
+  author         Author     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  categories     Category[]
+  tags           Tag[]
+  comments       Comment[]
+  customFields   Json?
+  metaTitle      String?
+  metaDescription String?
+  metaKeywords   String[]
+  ogTitle        String?
+  ogDescription  String?
+  ogImage        String?
+  ogType         String?
+  twitterCard    String?
+  twitterSite    String?
+  twitterCreator String?
+  canonicalUrl   String?
+  noIndex        Boolean    @default(false)
+  noFollow       Boolean    @default(false)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  @@index([slug])
+  @@index([status])
+  @@index([publishedAt])
+  @@map("posts")
+}
+
+// Comment model
+model Comment {
+  id        String    @id @default(cuid())
+  content   String    @db.Text
+  author    String
+  email     String
+  approved  Boolean   @default(false)
+  postId    String
+  post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parentId  String?
+  parent    Comment?  @relation("CommentToComment", fields: [parentId], references: [id], onDelete: Cascade)
+  replies   Comment[] @relation("CommentToComment")
+  createdAt DateTime  @default(now())
+
+  @@index([postId])
+  @@map("comments")
+}
+
+// Page status enum
+enum PageStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+// Page template enum
+enum PageTemplate {
+  DEFAULT
+  FULL_WIDTH
+  SIDEBAR_LEFT
+  SIDEBAR_RIGHT
+  LANDING
+  CONTACT
+  ABOUT
+  CUSTOM
+}
+
+// Page model
+model Page {
+  id             String       @id @default(cuid())
+  title          String
+  slug           String       @unique
+  content        String       @db.Text
+  blocks         Json?        // Page builder blocks
+  usePageBuilder Boolean      @default(false) // Use blocks or traditional content
+  template       PageTemplate @default(DEFAULT)
+  featuredImage  String?
+  status         PageStatus   @default(DRAFT)
+  order          Int          @default(0)
+  parentId       String?
+  parent         Page?        @relation("PageToPage", fields: [parentId], references: [id], onDelete: SetNull)
+  children       Page[]       @relation("PageToPage")
+  customFields   Json?
+  metaTitle      String?
+  metaDescription String?
+  metaKeywords   String[]
+  ogTitle        String?
+  ogDescription  String?
+  ogImage        String?
+  canonicalUrl   String?
+  noIndex        Boolean      @default(false)
+  noFollow       Boolean      @default(false)
+  publishedAt    DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([slug])
+  @@index([status])
+  @@map("pages")
+}
+
+// Site settings model (WordPress-style key-value store)
+model Setting {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String   @db.Text
+  label       String?
+  description String?
+  type        String   @default("text") // text, number, boolean, json, email, url
+  category    String   @default("general") // general, seo, appearance, reading, discussion, social, analytics, email, performance, media
+  autoload    Boolean  @default(true) // Load on every request (like WordPress)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+  @@index([autoload])
+  @@map("settings")
+}
+
+// Theme model
+model Theme {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  version     String
+  author      String
+  description String
+  thumbnail   String?
+  config      Json
+  active      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("themes")
+}
